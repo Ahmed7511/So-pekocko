@@ -17,7 +17,7 @@ const fs = require('fs');
   exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ?           
     {
-      ...JSON.parse(req.body.sauce),  //on parse la chine de caracters
+      ...JSON.parse(req.body.sauce),  //on parse la chaine de caracters
       imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`  // si le req.file exsiste
     } : {...req.body};        // si le req.file n'exsiste pas
     
@@ -88,7 +88,7 @@ exports.getAllSauce = (req, res, next) =>{
       break;
    
      default:
-       throw("impossible de réagi sur cet sauce reéssayer plus tard !")  // on envoie l'exeption
+       throw("impossible de réagir sur cet sauce reéssayer plus tard !")  // on envoie l'exeption
       }
              })
     .catch(error => res.status(400).json({ error }));
