@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');          
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');  // pour créé les token et les vérifier
 const User = require('../models/User');
 const mailValidator = require('email-validator'); 
 const passwordValidator = require('password-validator'); 
@@ -20,7 +20,7 @@ exports.signup = (req, res, next) => {
   if (!mailValidator.validate(req.body.email) || (!schema.validate(req.body.password))) {  
     throw { error: " entrer invalide !" }  
 } else if (mailValidator.validate(req.body.email) && (schema.validate(req.body.password))) { 
-  bcrypt.hash(req.body.password, 10)
+  bcrypt.hash(req.body.password, 10)   // function pour hashé le mot de passe  avec 10 tour de l'exucution de l'algoritme de hashage
     .then(hash => {
       const user = new User({
         email: req.body.email,
@@ -28,7 +28,7 @@ exports.signup = (req, res, next) => {
       });
       user.save()
         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error =>{console.log(error);res.status(400).json({ error })});
+        .catch(error => res.status(400).json({ error }));
     })
 
     .catch(error => res.status(500).json({ error }));
